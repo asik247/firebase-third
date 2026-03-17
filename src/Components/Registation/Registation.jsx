@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import useMyHook from '../../Hooks/useMyHook';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
+import { FaEye } from 'react-icons/fa';
 
 const Registation = () => {
     const [password, handleChangePassword] = useMyHook('');
     const [email, handleChangeEmail] = useMyHook('');
+    // Eye state code here now;
+    const [show,setShow] = useState(false);
     // Error and success sate her now;
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -42,6 +45,12 @@ const Registation = () => {
                 setError(error.message)
             })
     }
+
+    // Eye Toggling code here now;
+    const handleTogglingPassword = (e)=>{
+        e.preventDefault();
+        setShow(!show)
+    }
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col">
@@ -56,9 +65,12 @@ const Registation = () => {
                             <fieldset className="fieldset">
                                 <label className="label">Email</label>
                                 <input type="email" value={email} onChange={handleChangeEmail} className="input" placeholder="Email" />
-                                <label className="label">Password</label>
-                                <input type="password" value={password} onChange={handleChangePassword} className="input" placeholder="Password" />
+                                <div className='relative'>
+                                    <label className="label">Password</label>
+                                    <input type={show ? 'text' :'password'} value={password} onChange={handleChangePassword} className="input" placeholder="Password" />
+                                  <button onClick={handleTogglingPassword} className='btn btn-ghost absolute right-5'>  <FaEye></FaEye></button>
 
+                                </div>
                                 <button className="btn btn-neutral mt-4">Registation</button>
                                 {
                                     success && <p className='text-green-500 font-bold text-2xl'>Authencation Successfully</p>
