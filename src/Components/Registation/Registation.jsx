@@ -7,8 +7,8 @@ const Registation = () => {
     const [password, handleChangePassword] = useMyHook('');
     const [email, handleChangeEmail] = useMyHook('');
     // Error and success sate her now;
-    const [error,setError] = useState('');
-    const [success,setSuccess] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState(false);
     const submited = (e) => {
         e.preventDefault();
         // console.log(password,email);
@@ -16,12 +16,20 @@ const Registation = () => {
         setError('')
         setSuccess(false)
         // validation before cal firbase;
-        if(!email){
+        if (!email) {
             setError('Email dite hobe');
             return;
         }
-        if(!password){
+        if (!email.includes("@")) {
+            setError("Valid email দাও ❌");
+            return;
+        }
+        if (!password) {
             setError('Passowrd dite hobe')
+            return;
+        }
+        if (password.length < 6) {
+            setError("Password কমপক্ষে 6 characters হতে হবে ❌");
             return;
         }
         // email,password authencation;
@@ -30,7 +38,7 @@ const Registation = () => {
                 console.log(res.user);
                 setSuccess(true)
             }).catch(error => {
-                console.log('error message:',error.message);
+                console.log('error message:', error.message);
                 setError(error.message)
             })
     }
