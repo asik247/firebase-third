@@ -1,11 +1,11 @@
 import Root from "../Root/Root";
 
-const { createBrowserRouter } =("react-router");
+import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
     {
-        path:'/',
-        Component:Root
+        path: '/',
+        Component: Root
     }
 ])
 export default router
