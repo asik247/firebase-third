@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useMyHook from '../../Hooks/useMyHook';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
@@ -6,16 +6,23 @@ import { auth } from '../../firebase/firebase.init';
 const Registation = () => {
     const [password, handleChangePassword] = useMyHook('');
     const [email, handleChangeEmail] = useMyHook('');
+    // Error and success sate her now;
+    const [error,setError] = useState('');
+    const [success,setSuccess] = useState(false);
     const submited = (e) => {
         e.preventDefault();
         // console.log(password,email);
-
+        // reset error and successfully message;
+        setError('')
+        setSuccess(false)
         // email,password authencation;
         createUserWithEmailAndPassword(auth, email, password)
             .then(res => {
                 console.log(res.user);
+                setSuccess(true)
             }).catch(error => {
-                console.log(error);
+                console.log('error message:',error.message);
+                setError(error.message)
             })
     }
     return (
@@ -36,6 +43,12 @@ const Registation = () => {
                                 <input type="password" value={password} onChange={handleChangePassword} className="input" placeholder="Password" />
 
                                 <button className="btn btn-neutral mt-4">Registation</button>
+                                {
+                                    success && <p className='text-green-500'>Authencation Successfully</p>
+                                }
+                                {
+                                    error && <p className='text-red-600 font-bold text-2xl'>{error}</p>
+                                }
                             </fieldset>
                         </form>
                     </div>
