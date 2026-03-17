@@ -15,6 +15,15 @@ const Registation = () => {
         // reset error and successfully message;
         setError('')
         setSuccess(false)
+        // validation before cal firbase;
+        if(!email){
+            setError('Email dite hobe');
+            return;
+        }
+        if(!password){
+            setError('Passowrd dite hobe')
+            return;
+        }
         // email,password authencation;
         createUserWithEmailAndPassword(auth, email, password)
             .then(res => {
@@ -44,7 +53,7 @@ const Registation = () => {
 
                                 <button className="btn btn-neutral mt-4">Registation</button>
                                 {
-                                    success && <p className='text-green-500'>Authencation Successfully</p>
+                                    success && <p className='text-green-500 font-bold text-2xl'>Authencation Successfully</p>
                                 }
                                 {
                                     error && <p className='text-red-600 font-bold text-2xl'>{error}</p>
