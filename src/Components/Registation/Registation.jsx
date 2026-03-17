@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import useMyHook from '../../Hooks/useMyHook';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
-import { FaEye } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Registation = () => {
     const [password, handleChangePassword] = useMyHook('');
     const [email, handleChangeEmail] = useMyHook('');
     // Eye state code here now;
-    const [show,setShow] = useState(false);
+    const [show, setShow] = useState(false);
     // Error and success sate her now;
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
@@ -47,7 +47,7 @@ const Registation = () => {
     }
 
     // Eye Toggling code here now;
-    const handleTogglingPassword = (e)=>{
+    const handleTogglingPassword = (e) => {
         e.preventDefault();
         setShow(!show)
     }
@@ -67,8 +67,10 @@ const Registation = () => {
                                 <input type="email" value={email} onChange={handleChangeEmail} className="input" placeholder="Email" />
                                 <div className='relative'>
                                     <label className="label">Password</label>
-                                    <input type={show ? 'text' :'password'} value={password} onChange={handleChangePassword} className="input" placeholder="Password" />
-                                  <button onClick={handleTogglingPassword} className='btn btn-ghost absolute right-5'>  <FaEye></FaEye></button>
+                                    <input type={show ? 'text' : 'password'} value={password} onChange={handleChangePassword} className="input" placeholder="Password" />
+                                    <button onClick={handleTogglingPassword} className='btn btn-ghost absolute right-5'>
+                                        {show ? <FaEye></FaEye> : <FaEyeSlash />}
+                                    </button>
 
                                 </div>
                                 <button className="btn btn-neutral mt-4">Registation</button>
