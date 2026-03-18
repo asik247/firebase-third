@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
 import { LuEyeOff } from 'react-icons/lu';
@@ -18,9 +18,9 @@ const SignUp = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const term = e.target.terms.checked
-        console.log(email, password,term);
+        console.log(email, password, term);
 
-        if(!term){
+        if (!term) {
             setError("please accept terms")
             return;
         }
@@ -28,6 +28,10 @@ const SignUp = () => {
             .then(res => {
                 console.log(res.user);
                 setSucess(res.user)
+                sendEmailVerification(res.user)
+                    .then(() => {
+                        alert("please varify email")
+                    })
             }).catch(error => {
                 console.log(error);
                 setError(error.message)
@@ -77,7 +81,7 @@ const SignUp = () => {
                                     error && <p className='text-2xl font-bold text-red-600'>{error}</p>
                                 }
                                 <div>
-                                    <p className='font-bold text-xl'>Already have an account? please <Link    className='text-blue-700 font-bold text-xl underline' to={'/login'}> LogIn</Link></p>
+                                    <p className='font-bold text-xl'>Already have an account? please <Link className='text-blue-700 font-bold text-xl underline' to={'/login'}> LogIn</Link></p>
                                 </div>
                             </fieldset>
                         </form>

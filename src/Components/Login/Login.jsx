@@ -17,6 +17,9 @@ const Login = () => {
         .then(res=>{
             console.log(res.user);
             setSuccess(res.user)
+            if(!res.user.emailVerified){
+                alert("no email validation")
+            }
         }).catch(error=>{
             console.log(error.message);
             setError(error.message)
