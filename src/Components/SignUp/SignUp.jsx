@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
 import { LuEyeOff } from 'react-icons/lu';
@@ -20,7 +20,7 @@ const SignUp = () => {
         const term = e.target.terms.checked
         const name = e.target.name.value;
         const photo = e.target.photo.value
-        console.log(email, password, term,name,photo);
+        console.log(email, password, term, name, photo);
 
         if (!term) {
             setError("please accept terms")
@@ -31,7 +31,13 @@ const SignUp = () => {
                 console.log(res.user);
                 setSucess(res.user)
                 // Update user profile code start here;
-                
+                const profile = {
+                    displayName: name,
+                    photoURL: photo
+                }
+                console.log(profile);
+                updateProfile(res.user, profile)
+
                 sendEmailVerification(res.user)
                     .then(() => {
                         alert("please varify email")
