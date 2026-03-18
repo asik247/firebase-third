@@ -18,7 +18,9 @@ const SignUp = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const term = e.target.terms.checked
-        console.log(email, password, term);
+        const name = e.target.name.value;
+        const photo = e.target.photo.value
+        console.log(email, password, term,name,photo);
 
         if (!term) {
             setError("please accept terms")
@@ -28,6 +30,8 @@ const SignUp = () => {
             .then(res => {
                 console.log(res.user);
                 setSucess(res.user)
+                // Update user profile code start here;
+                
                 sendEmailVerification(res.user)
                     .then(() => {
                         alert("please varify email")
@@ -55,6 +59,13 @@ const SignUp = () => {
                     <div className="card-body">
                         <form onSubmit={handleSignUp}>
                             <fieldset className="fieldset">
+                                {/* Name input filed */}
+                                <label className="label">Name</label>
+                                <input type="text" name='name' className="input" placeholder="Your Name" />
+                                {/* Photo Url input field */}
+                                <label className="label">Photo</label>
+                                <input type="text" name='photo' className="input" placeholder="Photo URL" />
+                                {/* Email input field */}
                                 <label className="label">Email</label>
                                 <input type="email" name='email' className="input" placeholder="Email" />
 
