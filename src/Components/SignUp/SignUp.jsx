@@ -37,7 +37,7 @@ const SignUp = () => {
                 }
                 console.log(profile);
                 updateProfile(res.user, profile)
-
+                // email validation code start here now;
                 sendEmailVerification(res.user)
                     .then(() => {
                         alert("please varify email")
