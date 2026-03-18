@@ -1,11 +1,13 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useRef, useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
 
 const Login = () => {
     // Error and successfully state here now;
     const [error,setError] = useState('')
     const [success,setSuccess] = useState(false);
+    // useRef code here now;
+    const emailRrf = useRef();
     const handleLogin = (e)=>{
         e.preventDefault();
         setError('')
@@ -26,6 +28,16 @@ const Login = () => {
         })
 
     }
+    // Forgate password code here now;
+    const handleForgate = (e)=>{
+        e.preventDefault();
+        const email = emailRrf.current.value;
+        console.log("forgate password",email);
+        sendPasswordResetEmail(auth,email)
+        .then(()=>{
+            alert("email cheacked and reset password")
+        })
+    }
     return (
         <div>
             <div className="hero bg-base-200 min-h-screen">
@@ -39,10 +51,14 @@ const Login = () => {
                             <form onSubmit={handleLogin}>
                                 <fieldset className="fieldset">
                                     <label className="label">Email</label>
-                                    <input type="email" className="input" name='email' placeholder="Email" />
+                                    <input type="email" className="input" ref={emailRrf} name='email' placeholder="Email" />
                                     <label className="label">Password</label>
                                     <input type="password" className="input" name='password' placeholder="Password" />
-                                    <div><a className="link link-hover">Forgot password?</a></div>
+                                    <div onClick={handleForgate}>
+                                        
+                                        <a className="link link-hover">Forgot password?</a>
+                                    
+                                    </div>
                                     <button className="btn btn-neutral mt-4">Login</button>
                                 </fieldset>
                                 {
