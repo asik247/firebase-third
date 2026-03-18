@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
 import { LuEyeOff } from 'react-icons/lu';
 import { FaEye } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const SignUp = () => {
     // error state code here now;
@@ -75,6 +76,9 @@ const SignUp = () => {
                                 {
                                     error && <p className='text-2xl font-bold text-red-600'>{error}</p>
                                 }
+                                <div>
+                                    <p className='font-bold text-xl'>Already have an account? please <Link    className='text-blue-700 font-bold text-xl underline' to={'/login'}> LogIn</Link></p>
+                                </div>
                             </fieldset>
                         </form>
                     </div>
