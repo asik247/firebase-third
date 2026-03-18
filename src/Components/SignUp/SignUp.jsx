@@ -16,7 +16,13 @@ const SignUp = () => {
         setSucess(false)
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email, password);
+        const term = e.target.terms.checked
+        console.log(email, password,term);
+
+        if(!term){
+            setError("please accept terms")
+            return;
+        }
         createUserWithEmailAndPassword(auth, email, password)
             .then(res => {
                 console.log(res.user);
@@ -54,7 +60,13 @@ const SignUp = () => {
                                         {showEye ? <LuEyeOff /> : <FaEye />}
                                     </button>
                                 </div>
-
+                                {/* Accept our terms and condition */}
+                                <div className='mt-2'>
+                                    <label className="label">
+                                        <input type="checkbox" name='terms' className="checkbox" />
+                                        Accept All Conditon!
+                                    </label>
+                                </div>
                                 <button className="btn btn-neutral mt-4">SignUp</button>
                                 {/* error message */}
                                 {
