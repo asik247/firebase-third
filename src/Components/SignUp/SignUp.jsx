@@ -2,8 +2,27 @@ import React from 'react';
 
 const SignUp = () => {
     return (
-        <div>
-            <h1>sign up</h1>
+        <div className="hero bg-base-200 min-h-screen">
+            <div className="hero-content flex-col">
+                <div className="text-center ">
+                    <h1 className="text-5xl font-bold mb-4">SignUp now!</h1>
+
+                </div>
+                <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+                    <div className="card-body">
+                        <form>
+                            <fieldset className="fieldset">
+                                <label className="label">Email</label>
+                                <input type="email" className="input" placeholder="Email" />
+                                <label className="label">Password</label>
+                                <input type="password" className="input" placeholder="Password" />
+
+                                <button className="btn btn-neutral mt-4">SignUp</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
