@@ -6,6 +6,8 @@ import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/
 // authe import;
 import { auth } from '../../firebase/firebase.init';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { NavLink } from 'react-router';
+;
 
 
 const SignUp2 = () => {
@@ -21,8 +23,8 @@ const SignUp2 = () => {
     const handleSubmitBtn = (e) => {
         e.preventDefault();
         const terms = e.target.terms.checked;
-        console.log(emailValue, passwordValue,terms);
-        
+        console.log(emailValue, passwordValue, terms);
+
         // Reset all message;
         setSucess(false);
         setError('')
@@ -38,7 +40,7 @@ const SignUp2 = () => {
             return;
         }
         // Terms checked;
-        if(!terms){
+        if (!terms) {
             setError("Please Accept Terms")
             return;
         }
@@ -49,11 +51,11 @@ const SignUp2 = () => {
                 setSucess(res.user)
                 // Email Varification;
                 sendEmailVerification(res.user)
-                .then(()=>{
-                    alert("Verify Your Email Then LogIn")
-                }).catch(error=>{
-                    console.log(error);
-                })
+                    .then(() => {
+                        alert("Verify Your Email Then LogIn")
+                    }).catch(error => {
+                        console.log(error);
+                    })
             })
             .catch(error => {
                 console.log(error.message);
@@ -95,7 +97,7 @@ const SignUp2 = () => {
                                     <div>
                                         <label className="label font-bold text-sm">
                                             <input name='terms' type="checkbox" className="checkbox" />
-                                           Accept Taitariya!
+                                            Accept Taitariya!
                                         </label>
                                     </div>
 
@@ -106,6 +108,14 @@ const SignUp2 = () => {
                                 {sucess && <p className='text-green-600 text-xl'>Sucessfully Account Create!</p>}
 
                                 {error && <p className='text-red-600 text-xl'>{error}</p>}
+                                <div>
+                                  
+                                    <p className='text-sm'>
+                                          Alreay have'n account ? please
+                                        <NavLink to={'/login2'} className={'text-blue-500 underline text-[16px] font-extrabold'}> LogIn </NavLink>
+
+                                    </p>
+                                </div>
                             </form>
                         </div>
                     </div>
