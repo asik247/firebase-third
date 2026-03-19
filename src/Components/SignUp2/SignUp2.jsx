@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // hook2 import code;
 import useMyHook2 from '../../Hooks/useMyHook2';
 // create user firebase import;
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 // authe import;
 import { auth } from '../../firebase/firebase.init';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -47,6 +47,13 @@ const SignUp2 = () => {
             .then(res => {
                 console.log(res.user);
                 setSucess(res.user)
+                // Email Varification;
+                sendEmailVerification(res.user)
+                .then(()=>{
+                    alert("Verify Your Email Then LogIn")
+                }).catch(error=>{
+                    console.log(error);
+                })
             })
             .catch(error => {
                 console.log(error.message);
