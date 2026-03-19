@@ -5,6 +5,7 @@ import useMyHook2 from '../../Hooks/useMyHook2';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 // authe import;
 import { auth } from '../../firebase/firebase.init';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 const SignUp2 = () => {
@@ -14,6 +15,8 @@ const SignUp2 = () => {
     // Error state + Success Message state here;
     const [error, setError] = useState('');
     const [sucess, setSucess] = useState(false);
+    // Eye Toggling state here;
+    const [eye, setEye] = useState(false);
     // submite btn here now;
     const handleSubmitBtn = (e) => {
         e.preventDefault();
@@ -43,6 +46,12 @@ const SignUp2 = () => {
                 setError(error.message)
             })
     }
+    // Eye Toggling handler here;
+    const handleEyeToggle = (e) => {
+        e.preventDefault();
+        setEye(!eye);
+    }
+
     return (
         <div>
             <div className="hero bg-base-200 min-h-screen">
@@ -58,9 +67,16 @@ const SignUp2 = () => {
                                     {/* Email input field */}
                                     <label className="label">Email</label>
                                     <input type="email" value={emailValue} onChange={handleEmailChange} className="input" placeholder="Email" />
-                                    {/* Password input field */}
-                                    <label className="label">Password</label>
-                                    <input type="password" value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
+
+
+                                    <div className='relative'>
+                                        {/* Password input field */}
+                                        <label className="label">Password</label>
+                                        <input type={eye ? 'text' : 'password'} value={passwordValue} onChange={handlePasswordChange} className="input" placeholder="Password" />
+                                        <button onClick={handleEyeToggle} className='btn btn-ghost absolute right-0.5'>
+                                            {eye ? <FaEye /> : <FaEyeSlash />}
+                                        </button>
+                                    </div>
 
                                     <button className="btn btn-neutral mt-4">SingUP2</button>
                                 </fieldset>
