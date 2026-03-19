@@ -12,8 +12,8 @@ const SignUp2 = () => {
     const [emailValue, handleEmailChange] = useMyHook2('');
     const [passwordValue, handlePasswordChange] = useMyHook2('');
     // Error state + Success Message state here;
-    const [error,setError] = useState('');
-    const [sucess,setSucess] = useState(false);
+    const [error, setError] = useState('');
+    const [sucess, setSucess] = useState(false);
     // submite btn here now;
     const handleSubmitBtn = (e) => {
         e.preventDefault();
@@ -21,6 +21,17 @@ const SignUp2 = () => {
         // Reset all message;
         setSucess(false);
         setError('')
+        // RegEx use and some validation;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailValue)) {
+            setError("Invalid Email!");
+            return;
+        }
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$/;
+        if (!passwordRegex.test(passwordValue)) {
+            setError("Password must have uppercase, lowercase, number & 6+ chars");
+            return;
+        }
         // create user code here;
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then(res => {
