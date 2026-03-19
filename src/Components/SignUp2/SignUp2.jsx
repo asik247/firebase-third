@@ -1,5 +1,11 @@
 import React from 'react';
+// hook2 import code;
 import useMyHook2 from '../../Hooks/useMyHook2';
+// create user firebase import;
+import { createUserWithEmailAndPassword } from "firebase/auth";
+// authe import;
+import { auth } from '../../firebase/firebase.init';
+
 
 const SignUp2 = () => {
     // Hook code start here;
@@ -7,7 +13,15 @@ const SignUp2 = () => {
     const [passwordValue, handlePasswordChange] = useMyHook2('');
     const handleSubmitBtn = (e) => {
         e.preventDefault();
-        console.log(emailValue, passwordValue);
+        // console.log(emailValue, passwordValue);
+        // create user code here;
+        createUserWithEmailAndPassword(auth, emailValue, passwordValue)
+            .then(res => {
+                console.log(res.user);
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
     }
     return (
         <div>
