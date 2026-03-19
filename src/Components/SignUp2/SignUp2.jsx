@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // hook2 import code;
 import useMyHook2 from '../../Hooks/useMyHook2';
 // create user firebase import;
-import { createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 // authe import;
 import { auth } from '../../firebase/firebase.init';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -14,6 +14,8 @@ const SignUp2 = () => {
     // Hook code start here;
     const [emailValue, handleEmailChange] = useMyHook2('');
     const [passwordValue, handlePasswordChange] = useMyHook2('');
+    const [nameValue, handleNameChange] = useMyHook2('');
+    const [photoValue, handlePhotoChange] = useMyHook2('');
     // Error state + Success Message state here;
     const [error, setError] = useState('');
     const [sucess, setSucess] = useState(false);
@@ -23,7 +25,7 @@ const SignUp2 = () => {
     const handleSubmitBtn = (e) => {
         e.preventDefault();
         const terms = e.target.terms.checked;
-        console.log(emailValue, passwordValue, terms);
+        console.log(emailValue, passwordValue, terms,nameValue,photoValue);
 
         // Reset all message;
         setSucess(false);
@@ -56,6 +58,12 @@ const SignUp2 = () => {
                     }).catch(error => {
                         console.log(error);
                     })
+                // Update user profile;
+                const profile = {
+                    displayName:nameValue,
+                    photoURL:photoValue
+                }
+                updateProfile(res.user,profile)
             })
             .catch(error => {
                 console.log(error.message);
@@ -80,6 +88,16 @@ const SignUp2 = () => {
                         <div className="card-body">
                             <form onSubmit={handleSubmitBtn}>
                                 <fieldset className="fieldset">
+                                  {/* Name input field */}
+                                    <label className="label">Name</label>
+                                    <input type="text" value={nameValue} onChange={handleNameChange} className="input" placeholder="Name" />
+
+                                      {/* PhotoUrl input field */}
+                                    <label className="label">PhotoURL</label>
+                                    <input type="text" value={photoValue} onChange={handlePhotoChange} className="input" placeholder="Photo" />
+
+
+
                                     {/* Email input field */}
                                     <label className="label">Email</label>
                                     <input type="email" value={emailValue} onChange={handleEmailChange} className="input" placeholder="Email" />

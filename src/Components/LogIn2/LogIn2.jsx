@@ -1,10 +1,11 @@
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { auth } from '../../firebase/firebase.init';
 import { NavLink } from 'react-router';
 
 const LogIn2 = () => {
     const emailRef = useRef(null);
+    const [showUser,setShowUser] = useState("");
     // LogIn form submit handler here;
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,6 +17,7 @@ const LogIn2 = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(res => {
                 console.log(res.user);
+                setShowUser(res.user)
                 if (!res.user.emailVerified) {
                     alert("Not verify Email")
                 }
@@ -29,7 +31,8 @@ const LogIn2 = () => {
     const forgotPasswordHandler = (e) => {
         e.preventDefault();
         console.log("clicked forgot passowrd", emailRef.current.value);
-        sendPasswordResetEmail(auth, emailRef)
+        const email = emailRef.current.value
+        sendPasswordResetEmail(auth, email)
             .then(() => {
                 alert("Email Cheacked and password Reset!")
             })
@@ -66,6 +69,12 @@ const LogIn2 = () => {
                                     <NavLink to={'/signUp2'} className={'text-blue-500 underline text-[16px] font-extrabold'}> SignUP </NavLink>
 
                                 </p>
+                            </div>
+                            <div>
+                                {showUser && <div>
+                                    <h1>{showUser.displayName}</h1>
+                                    <img src={showUser.photoURL} alt="" />
+                              </div>}
                             </div>
                         </div>
                     </div>
