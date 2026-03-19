@@ -1,10 +1,27 @@
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
+import { auth } from '../../firebase/firebase.init';
+import { NavLink } from 'react-router';
 
 const LogIn2 = () => {
     // LogIn form submit handler here;
     const handleSubmit = (e)=>{
         e.preventDefault();
         console.log("logIn form submit");
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email,password);
+        // SingIn in code here;
+        signInWithEmailAndPassword(auth,email,password)
+        .then(res=>{
+            console.log(res.user);
+            if(!res.user.emailVerified){
+                alert("Not verify Email")
+            }
+        })
+        .catch(error=>{
+            console.log(error);
+        })
     }
     return (
         <div>
@@ -19,13 +36,21 @@ const LogIn2 = () => {
                             <form onSubmit={handleSubmit}>
                                 <fieldset className="fieldset">
                                     <label className="label">Email</label>
-                                    <input type="email" className="input" placeholder="Email" />
+                                    <input type="email" name='email' className="input" placeholder="Email" />
                                     <label className="label">Password</label>
-                                    <input type="password" className="input" placeholder="Password" />
+                                    <input type="password" name='password' className="input" placeholder="Password" />
                                     <div><a className="link link-hover">Forgot password?</a></div>
                                     <button className="btn btn-neutral mt-4">Login2</button>
                                 </fieldset>
                             </form>
+                              <div>
+                                  
+                                    <p className='text-sm'>
+                                          No Account Create ? please
+                                        <NavLink to={'/signUp2'} className={'text-blue-500 underline text-[16px] font-extrabold'}> SignUP </NavLink>
+
+                                    </p>
+                                </div>
                         </div>
                     </div>
                 </div>
