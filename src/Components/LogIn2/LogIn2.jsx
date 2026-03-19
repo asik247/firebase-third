@@ -1,27 +1,38 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import React from 'react';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useRef } from 'react';
 import { auth } from '../../firebase/firebase.init';
 import { NavLink } from 'react-router';
 
 const LogIn2 = () => {
+    const emailRef = useRef(null);
     // LogIn form submit handler here;
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault();
         console.log("logIn form submit");
         const email = e.target.email.value;
         const password = e.target.password.value;
-        console.log(email,password);
+        console.log(email, password);
         // SingIn in code here;
-        signInWithEmailAndPassword(auth,email,password)
-        .then(res=>{
-            console.log(res.user);
-            if(!res.user.emailVerified){
-                alert("Not verify Email")
-            }
-        })
-        .catch(error=>{
-            console.log(error);
-        })
+        signInWithEmailAndPassword(auth, email, password)
+            .then(res => {
+                console.log(res.user);
+                if (!res.user.emailVerified) {
+                    alert("Not verify Email")
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+    // Forgot Pasword handler code here;
+    const forgotPasswordHandler = (e) => {
+        e.preventDefault();
+        console.log("clicked forgot passowrd", emailRef.current.value);
+        sendPasswordResetEmail(auth, emailRef)
+            .then(() => {
+                alert("Email Cheacked and password Reset!")
+            })
     }
     return (
         <div>
@@ -36,21 +47,26 @@ const LogIn2 = () => {
                             <form onSubmit={handleSubmit}>
                                 <fieldset className="fieldset">
                                     <label className="label">Email</label>
-                                    <input type="email" name='email' className="input" placeholder="Email" />
+                                    <input type="email" name='email' className="input" ref={emailRef} placeholder="Email" />
                                     <label className="label">Password</label>
                                     <input type="password" name='password' className="input" placeholder="Password" />
-                                    <div><a className="link link-hover">Forgot password?</a></div>
+
+                                    <div onClick={forgotPasswordHandler}>
+                                        <a className="link link-hover">Forgot password?</a>
+
+                                    </div>
+
                                     <button className="btn btn-neutral mt-4">Login2</button>
                                 </fieldset>
                             </form>
-                              <div>
-                                  
-                                    <p className='text-sm'>
-                                          No Account Create ? please
-                                        <NavLink to={'/signUp2'} className={'text-blue-500 underline text-[16px] font-extrabold'}> SignUP </NavLink>
+                            <div>
 
-                                    </p>
-                                </div>
+                                <p className='text-sm'>
+                                    No Account Create ? please
+                                    <NavLink to={'/signUp2'} className={'text-blue-500 underline text-[16px] font-extrabold'}> SignUP </NavLink>
+
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
