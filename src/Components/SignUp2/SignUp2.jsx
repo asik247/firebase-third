@@ -20,7 +20,9 @@ const SignUp2 = () => {
     // submite btn here now;
     const handleSubmitBtn = (e) => {
         e.preventDefault();
-        // console.log(emailValue, passwordValue);
+        const terms = e.target.terms.checked;
+        console.log(emailValue, passwordValue,terms);
+        
         // Reset all message;
         setSucess(false);
         setError('')
@@ -33,6 +35,11 @@ const SignUp2 = () => {
         const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{6,}$/;
         if (!passwordRegex.test(passwordValue)) {
             setError("Password must have uppercase, lowercase, number & 6+ chars");
+            return;
+        }
+        // Terms checked;
+        if(!terms){
+            setError("Please Accept Terms")
             return;
         }
         // create user code here;
@@ -76,6 +83,13 @@ const SignUp2 = () => {
                                         <button onClick={handleEyeToggle} className='btn btn-ghost absolute right-0.5'>
                                             {eye ? <FaEye /> : <FaEyeSlash />}
                                         </button>
+                                    </div>
+                                    {/* Cheackbox */}
+                                    <div>
+                                        <label className="label font-bold text-sm">
+                                            <input name='terms' type="checkbox" className="checkbox" />
+                                           Accept Taitariya!
+                                        </label>
                                     </div>
 
                                     <button className="btn btn-neutral mt-4">SingUP2</button>
