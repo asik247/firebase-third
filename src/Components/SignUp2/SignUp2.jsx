@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // hook2 import code;
 import useMyHook2 from '../../Hooks/useMyHook2';
 // create user firebase import;
@@ -11,16 +11,25 @@ const SignUp2 = () => {
     // Hook code start here;
     const [emailValue, handleEmailChange] = useMyHook2('');
     const [passwordValue, handlePasswordChange] = useMyHook2('');
+    // Error state + Success Message state here;
+    const [error,setError] = useState('');
+    const [sucess,setSucess] = useState(false);
+    // submite btn here now;
     const handleSubmitBtn = (e) => {
         e.preventDefault();
         // console.log(emailValue, passwordValue);
+        // Reset all message;
+        setSucess(false);
+        setError('')
         // create user code here;
         createUserWithEmailAndPassword(auth, emailValue, passwordValue)
             .then(res => {
                 console.log(res.user);
+                setSucess(res.user)
             })
             .catch(error => {
                 console.log(error.message);
+                setError(error.message)
             })
     }
     return (
@@ -44,6 +53,11 @@ const SignUp2 = () => {
 
                                     <button className="btn btn-neutral mt-4">SingUP2</button>
                                 </fieldset>
+
+                                {/* Error and success message show code here now */}
+                                {sucess && <p className='text-green-600 text-xl'>Sucessfully Account Create!</p>}
+
+                                {error && <p className='text-red-600 text-xl'>{error}</p>}
                             </form>
                         </div>
                     </div>
