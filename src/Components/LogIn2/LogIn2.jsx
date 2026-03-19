@@ -5,7 +5,11 @@ import { NavLink } from 'react-router';
 
 const LogIn2 = () => {
     const emailRef = useRef(null);
-    const [showUser,setShowUser] = useState("");
+    const [showUser, setShowUser] = useState("");
+    // Error state + Success Message state here;
+    const [error, setError] = useState('');
+    const [sucess, setSucess] = useState(false);
+
     // LogIn form submit handler here;
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,6 +21,7 @@ const LogIn2 = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(res => {
                 console.log(res.user);
+                setSucess(res.user)
                 setShowUser(res.user)
                 if (!res.user.emailVerified) {
                     alert("Not verify Email")
@@ -24,6 +29,7 @@ const LogIn2 = () => {
             })
             .catch(error => {
                 console.log(error);
+                setError(error.message)
             })
     }
 
@@ -70,11 +76,16 @@ const LogIn2 = () => {
 
                                 </p>
                             </div>
+                            {/* Error and success message show code here now */}
+                            {sucess && <p className='text-green-600 text-xl'>Sucessfully Account Create!</p>}
+
+                            {error && <p className='text-red-600 text-xl'>{error}</p>}
+
                             <div>
                                 {showUser && <div>
                                     <h1>{showUser.displayName}</h1>
                                     <img src={showUser.photoURL} alt="" />
-                              </div>}
+                                </div>}
                             </div>
                         </div>
                     </div>
